@@ -14,12 +14,14 @@ def build_http_client(
     tls: TLSConfig | None = None,
     timeout: float = 30.0,
 ) -> httpx.Client:
-    """Build an httpx client with optional mTLS configuration."""
+    """Build an httpx client with optional TLS configuration."""
     verify: ssl.SSLContext | str | bool = True
     cert: tuple[str, str] | str | None = None
 
     if tls:
-        if tls.ca_file:
+        if tls.insecure_skip_tls_verify:
+            verify = False
+        elif tls.ca_file:
             verify = tls.ca_file
         if tls.cert_file and tls.key_file:
             cert = (tls.cert_file, tls.key_file)

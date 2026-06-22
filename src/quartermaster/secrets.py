@@ -32,7 +32,7 @@ class SecretsClient:
         self._credentials = credentials
         self._settings = settings or credentials.settings
         self._owns_client = http_client is None
-        self._client = http_client or build_http_client()
+        self._client = http_client or build_http_client(tls=self._settings.tls)
 
     @property
     def base_url(self) -> str:

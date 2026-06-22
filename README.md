@@ -86,6 +86,7 @@ All settings are configurable via `Settings` or environment variables:
 | Sidecar URL | `QM_SIDECAR_URL` | `http://127.0.0.1:8765` |
 | Refresh margin (seconds) | `QM_REFRESH_MARGIN_SECS` | `300` |
 | CA file | `QM_CA_FILE` | — |
+| Skip TLS verification (dev only) | `QM_INSECURE_SKIP_TLS_VERIFY` | `false` |
 | Client cert | `QM_CERT_FILE` | — |
 | Client key | `QM_KEY_FILE` | — |
 

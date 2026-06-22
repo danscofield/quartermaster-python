@@ -15,11 +15,12 @@ DEFAULT_SIDECAR_URL = "http://127.0.0.1:8765"
 
 @dataclass
 class TLSConfig:
-    """Optional mTLS settings for Quartermaster connections."""
+    """TLS settings for HTTPS connections to Quartermaster and secrets services."""
 
     ca_file: str | None = None
     cert_file: str | None = None
     key_file: str | None = None
+    insecure_skip_tls_verify: bool = False
 
 
 @dataclass
@@ -42,6 +43,11 @@ class Settings:
             if margin_secs
             else timedelta(minutes=5)
         )
+        insecure = os.environ.get("QM_INSECURE_SKIP_TLS_VERIFY", "").lower() in {
+            "1",
+            "true",
+            "yes",
+        }
         return cls(
             quartermaster_url=os.environ.get(
                 "QM_QUARTERMASTER_URL", DEFAULT_QUARTERMASTER_URL
@@ -56,5 +62,6 @@ class Settings:
                 ca_file=os.environ.get("QM_CA_FILE"),
                 cert_file=os.environ.get("QM_CERT_FILE"),
                 key_file=os.environ.get("QM_KEY_FILE"),
+                insecure_skip_tls_verify=insecure,
             ),
         )
